@@ -1,0 +1,18 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+	  {
+		"name": "Run VASS File",
+		"type": "python",
+		"request": "launch",
+		"console": "integratedTerminal",
+		"program": "interpreter", 
+		"args": [
+		  "${file}"
+		],
+		"env": {},
+		"justMyCode": true
+	  }
+	]
+  }
+  

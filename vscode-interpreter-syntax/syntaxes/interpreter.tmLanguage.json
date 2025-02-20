@@ -1,0 +1,123 @@
+{
+	"scopeName": "source.interpreter",
+	"name": "Interpreter",
+	"patterns": [
+	  {
+		"begin": "\\b(wypisz)\\s+(napis|zmienną)\\b",
+		"beginCaptures": {
+		  "1": { "name": "keyword.control.interpreter" },
+		  "2": { "name": "support.function.output-type.interpreter" }
+		},
+		"end": "$",
+		"patterns": [
+		  { "include": "#string" },
+		  { "include": "#comment" },
+		  { "include": "#variable" },
+		  { "include": "#others" }
+		]
+	  },
+	  {
+		"name": "keyword.control.interpreter",
+		"match": "\\b(?:wczytaj|ustaw|zwiększ|zmniejsz|jeżeli|skocz|nowa)\\b"
+	  },
+	  {
+		"name": "variable.other.interpreter",
+		"match": "(?<=\\bwypisz\\s+zmienną\\s+)[A-D]\\b"
+	  },
+	  {
+		"name": "constant.language.jump.interpreter",
+		"match": "(?<=\\bskocz\\s+)(\\d+)"
+	  },
+	  {
+		"name": "constant.language.jump.interpreter",
+		"match": "(?<=\\bjeżeli\\s+\\S+\\s+\\S+\\s+\\S+\\s+)(next|end|\\d+)"
+	  },
+	  {
+		"name": "constant.language.jump.interpreter",
+		"match": "(?<=\\bjeżeli\\s+\\S+\\s+\\S+\\s+\\S+\\s+(?:next|end|\\d+)\\s+)(next|end|\\d+)"
+	  },
+	  {
+		"name": "constant.language.jump.interpreter",
+		"match": "\\b(next|end)\\b"
+	  },
+	  {
+		"name": "constant.numeric.interpreter",
+		"match": "\\b\\d+\\b"
+	  },
+	  {
+		"name": "variable.parameter.interpreter",
+		"match": "\\b[A-D]\\b"
+	  },
+	  {
+		"name": "punctuation.separator.interpreter",
+		"match": "[,]"
+	  },
+	  {
+		"name": "string.quoted.double.interpreter",
+		"begin": "\"",
+		"end": "\""
+	  },
+	  {
+		"name": "string.quoted.single.interpreter",
+		"begin": "'",
+		"end": "'"
+	  },
+	  {
+		"begin": "#",
+		"beginCaptures": {
+		  "0": { "name": "punctuation.definition.comment.interpreter" }
+		},
+		"end": "$",
+		"name": "comment.line.number-sign.interpreter"
+	  }
+	],
+	"repository": {
+	  "string": {
+		"patterns": [
+		  {
+			"name": "string.quoted.double.interpreter",
+			"begin": "\"",
+			"end": "\""
+		  },
+		  {
+			"name": "string.quoted.single.interpreter",
+			"begin": "'",
+			"end": "'"
+		  }
+		]
+	  },
+	  "comment": {
+		"patterns": [
+		  {
+			"begin": "#",
+			"beginCaptures": {
+			  "0": { "name": "punctuation.definition.comment.interpreter" }
+			},
+			"end": "$",
+			"name": "comment.line.number-sign.interpreter"
+		  }
+		]
+	  },
+	  "variable": {
+		"patterns": [
+		  {
+			"name": "variable.other.interpreter",
+			"match": "\\b[A-D]\\b"
+		  }
+		]
+	  },
+	  "others": {
+		"patterns": [
+		  {
+			"name": "constant.numeric.interpreter",
+			"match": "\\b\\d+\\b"
+		  },
+		  {
+			"name": "punctuation.separator.interpreter",
+			"match": "[,]"
+		  }
+		]
+	  }
+	}
+  }
+  

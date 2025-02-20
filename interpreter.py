@@ -13,6 +13,11 @@ class Interpreter:
 	def execute(self):
 		while self.current_line < len(self.program):
 			line = self.program[self.current_line].strip()
+
+			if line.lstrip().startswith("#"):
+				self.current_line += 1
+				continue
+
 			if line == "":
 				self.current_line += 1
 				continue
@@ -40,16 +45,25 @@ class Interpreter:
 				else:
 					print(f"Unknown command: {command}")
 					self.current_line += 1
-			except:
-				raise RuntimeError(f'wystąpił błąd.\n{parts = }\n{self.current_line = }\n{self.variables = }')
+			except Exception as e:
+				raise RuntimeError(f'{e}\n\nwystąpił błąd.\n{parts = }\n{self.current_line = }\n{self.variables = }')
 				
 
 	def print_instruction(self, parts):
 		if parts[1] == "zmienną":
 			print(self.variables[parts[2]], end='')
 		elif parts[1] == "napis":
-			print(" ".join(parts[2:]), end='')
+			# Łączenie wszystkich części po słowie "napis" w jeden ciąg
+			text = " ".join(parts[2:])
+			# Znalezienie pierwszego i drugiego wystąpienia cudzysłowu
+			start = text.find('"') + 1
+			end = text.find('"', start)
+			if start > 0 and end > start:
+				# Wydrukowanie tekstu pomiędzy cudzysłowami
+				print(text[start:end], end='')
 		self.current_line += 1
+
+
 
 	def read_input(self, parts):
 		var = parts[1]
@@ -146,9 +160,9 @@ class Interpreter:
 def main():
 	if len(sys.argv) < 2:
 		print("Proszę podać ścieżkę do pliku.")
-		#sys.exit(1)
+		sys.exit(1)
 
-	file_path = './program.vass'
+	file_path = sys.argv[1]
 	interpreter = Interpreter()
 	interpreter.load_program(file_path)
 	interpreter.execute()

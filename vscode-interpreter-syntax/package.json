@@ -1,0 +1,42 @@
+{
+	"name": "vscode-interpreter-syntax",
+	"displayName": "Interpreter Syntax Highlighting and Runner",
+	"description": "Rozszerzenie dla VSCode dodające podświetlanie składni dla języka interpretowanego oraz możliwość uruchamiania plików .vass.",
+	"version": "0.0.2",
+	"publisher": "twoja-nazwa",
+	"engines": {
+	  "vscode": "^1.60.0"
+	},
+	"main": "./extension.js",
+	"categories": [
+	  "Programming Languages"
+	],
+	"activationEvents": [
+	  "onLanguage:interpreter",
+	  "onCommand:extension.runVassFile"
+	],
+	"contributes": {
+	  "commands": [
+		{
+		  "command": "extension.runVassFile",
+		  "title": "Run VASS File"
+		}
+	  ],
+	  "languages": [
+		{
+		  "id": "interpreter",
+		  "aliases": ["Interpreter", "interpreter"],
+		  "extensions": [".int", ".vass"],
+		  "configuration": "./language-configuration.json"
+		}
+	  ],
+	  "grammars": [
+		{
+		  "language": "interpreter",
+		  "scopeName": "source.interpreter",
+		  "path": "./syntaxes/interpreter.tmLanguage.json"
+		}
+	  ]
+	}
+  }
+  
