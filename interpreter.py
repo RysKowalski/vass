@@ -1,10 +1,15 @@
 import sys
 
+def log_data(text: str) -> None:
+	with open('logs.log', 'a') as plik:
+		plik.write(text + '\n')
+
 class Interpreter:
 	def __init__(self):
 		self.variables = {"A": 0, "B": 0, "C": 0, "D": 0}
 		self.program = []
 		self.current_line = 0
+		self.steps = 0
 
 	def load_program(self, file_path):
 		with open(file_path, 'r') as f:
@@ -12,6 +17,7 @@ class Interpreter:
 
 	def execute(self):
 		while self.current_line < len(self.program):
+			self.steps += 1
 			line = self.program[self.current_line].strip()
 
 			if line.lstrip().startswith("#"):
@@ -45,9 +51,14 @@ class Interpreter:
 				else:
 					print(f"Unknown command: {command}")
 					self.current_line += 1
+					
+				log_data(f'steps: {self.steps}, line = {self.current_line}, vars = {self.variables}, {command = }, {parts = }')
+				if self.steps > 10_000:
+					raise RuntimeError('program nie może być dłóższy niż 10_000 linijek')
+
 			except Exception as e:
 				raise RuntimeError(f'{e}\n\nwystąpił błąd.\n{parts = }\n{self.current_line = }\n{self.variables = }')
-				
+		print()
 
 	def print_instruction(self, parts):
 		if parts[1] == "zmienną":
@@ -123,7 +134,7 @@ class Interpreter:
 		else:
 			condition = False
 		
-		#print(f'{condition = }, {parts = }')
+		#log_data(f'{condition = }, {parts = }, vars = {self.variables}')
 		
 		if condition:
 			if parts[4] == "end":
@@ -134,7 +145,7 @@ class Interpreter:
 				self.current_line = int(parts[4]) -1
 		else:
 			if parts[5] == "end":
-				exit()
+				self.current_line = len(self.program)
 			elif parts[5] == "next":
 				self.current_line += 1
 			else:
