@@ -1,0 +1,9 @@
+wczytaj A # ilość razy obie pętle mają się wykonać
+ustaw B 1
+ustaw C 1
+jeżeli B <= A next end
+	zwiększ B 1 # pod tą linią można dodać kod
+	ustaw C 1 
+	jeżeli C <= A next 4
+		zwiększ C 1 # pod tą linią można dodać
+		skocz 7

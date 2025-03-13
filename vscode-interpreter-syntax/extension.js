@@ -1,40 +1,38 @@
 const vscode = require('vscode');
-const cp = require('child_process');
 
 function activate(context) {
-    let disposable = vscode.commands.registerCommand('extension.runVassFile', function () {
-        const editor = vscode.window.activeTextEditor;
-        if (!editor) {
-            vscode.window.showErrorMessage("Brak aktywnego pliku.");
-            return;
-        }
-        const filePath = editor.document.fileName;
-        if (!filePath.endsWith('.vass')) {
-            vscode.window.showErrorMessage("Plik nie ma rozszerzenia .vass.");
-            return;
-        }
-        vscode.window.showInputBox({ prompt: "Podaj ścieżkę do interpretera (znajdującego się w PATH)" }).then(interpreterPath => {
-            if (!interpreterPath) {
-                vscode.window.showErrorMessage("Nie podano ścieżki do interpretera.");
-                return;
-            }
-            const command = `${interpreterPath} ${filePath}`;
-            cp.exec(command, (err, stdout, stderr) => {
-                if (err) {
-                    vscode.window.showErrorMessage(`Błąd uruchomienia: ${stderr}`);
-                    return;
-                }
-                vscode.window.showInformationMessage(`Wynik:\n${stdout}`);
-            });
-        });
-    });
+  let runFileCommand = vscode.commands.registerCommand('vass-extension.runFile', (uri) => {
+    let fileUri;
+    
+    // Sprawdź, czy argument to instancja vscode.Uri
+    if (uri instanceof vscode.Uri) {
+      fileUri = uri;
+    } else if (vscode.window.activeTextEditor) {
+      fileUri = vscode.window.activeTextEditor.document.uri;
+    } else {
+      vscode.window.showErrorMessage("Brak otwartego pliku!");
+      return;
+    }
+    
+    const filePath = fileUri.fsPath;
+    // Konstruujemy polecenie uruchomienia – upewnij się, że 'vass_interpreter' odpowiada Twojemu interpreterowi.
+    const command = `vass_interpreter "${filePath}"`;
+    
+    // Szukamy terminala o stałej nazwie, aby ponownie wykorzystywać już otwarty terminal.
+    let terminal = vscode.window.terminals.find(t => t.name === 'Uruchamianie pliku');
+    if (!terminal) {
+      terminal = vscode.window.createTerminal('Uruchamianie pliku');
+    }
+    terminal.show();
+    terminal.sendText(command);
+  });
 
-    context.subscriptions.push(disposable);
+  context.subscriptions.push(runFileCommand);
 }
 
 function deactivate() {}
 
 module.exports = {
-    activate,
-    deactivate
+  activate,
+  deactivate
 };

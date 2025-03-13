@@ -1,4 +1,5 @@
 import sys
+from sys import exit
 
 def log_data(text: str) -> None:
 	with open('logs.log', 'a') as plik:

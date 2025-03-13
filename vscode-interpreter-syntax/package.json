@@ -1,7 +1,11 @@
 {
-	"name": "vscode-interpreter-syntax",
-	"displayName": "Interpreter Syntax Highlighting and Runner",
+	"name": "vass-extension",
+	"displayName": "vass-extension",
 	"description": "Rozszerzenie dla VSCode dodające podświetlanie składni dla języka interpretowanego oraz możliwość uruchamiania plików .vass.",
+	"activationEvents": [
+	  "onLanguage:interpreter",
+	  "onCommand:vass-extension.runFile"
+	],
 	"version": "0.0.2",
 	"publisher": "twoja-nazwa",
 	"engines": {
@@ -11,22 +15,18 @@
 	"categories": [
 	  "Programming Languages"
 	],
-	"activationEvents": [
-	  "onLanguage:interpreter",
-	  "onCommand:extension.runVassFile"
-	],
 	"contributes": {
 	  "commands": [
 		{
-		  "command": "extension.runVassFile",
-		  "title": "Run VASS File"
+		  "command": "vass-extension.runFile",
+		  "title": "Uruchom plik"
 		}
 	  ],
 	  "languages": [
 		{
 		  "id": "interpreter",
 		  "aliases": ["Interpreter", "interpreter"],
-		  "extensions": [".int", ".vass"],
+		  "extensions": [".vass"],
 		  "configuration": "./language-configuration.json"
 		}
 	  ],
@@ -36,7 +36,16 @@
 		  "scopeName": "source.interpreter",
 		  "path": "./syntaxes/interpreter.tmLanguage.json"
 		}
-	  ]
+	  ],
+	  "menus": {
+		"editor/title": [
+		  {
+			"command": "vass-extension.runFile",
+			"when": "resourceLangId == interpreter",
+			"group": "navigation"
+		  }
+		]
+	  }
 	}
   }
   

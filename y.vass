@@ -1,0 +1,9 @@
+wczytaj A      # Pobierz liczbę od użytkownika
+ustaw B A      # B to aktualna liczba znaków do wypisania
+
+jeżeli B < 1 end next  # Jeśli liczba < 1, zakończ program
+
+nowa
+wypisz zmienną A  # Wypisz A B razy
+zmniejsz B 1
+jeżeli B > 0 3 next  # Jeśli B > 0, wróć do wypisywania
