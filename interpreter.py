@@ -173,6 +173,7 @@ def main():
 		print("Proszę podać ścieżkę do pliku.")
 		sys.exit(1)
 
+	log_data('\n\n\n\n')
 	file_path = sys.argv[1]
 	interpreter = Interpreter()
 	interpreter.load_program(file_path)

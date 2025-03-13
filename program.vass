@@ -1,3 +1,15 @@
 wczytaj A
-ustaw B A
-ustaw B A
+ustaw B 1
+ustaw C 1
+jeżeli B <= A next end
+	zwiększ B 1
+	jeżeli B = 1 next 8
+		skocz 11
+	jeżeli B = A next 10
+		skocz 11
+	nowa
+	ustaw C 1
+	jeżeli C <= A next 4
+		zwiększ C 1
+		wypisz napis "x"
+		skocz 12
