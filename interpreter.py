@@ -61,18 +61,20 @@ class Interpreter:
 				raise RuntimeError(f'{e}\n\nwystąpił błąd.\n{parts = }\n{self.current_line = }\n{self.variables = }')
 		print()
 
-	def print_instruction(self, parts):
+	def print_instruction(self, parts: list[str]) -> None:
 		if parts[1] == "zmienną":
 			print(self.variables[parts[2]], end='')
 		elif parts[1] == "napis":
 			# Łączenie wszystkich części po słowie "napis" w jeden ciąg
-			text = " ".join(parts[2:])
-			# Znalezienie pierwszego i drugiego wystąpienia cudzysłowu
-			start = text.find('"') + 1
-			end = text.find('"', start)
-			if start > 0 and end > start:
-				# Wydrukowanie tekstu pomiędzy cudzysłowami
-				print(text[start:end], end='')
+			text: str = " ".join(parts[2:]).lstrip()
+			# Sprawdzenie, czy pierwszy znak to cudzysłów (") lub apostrof (')
+			if text and text[0] in ('"', "'"):
+				delim: str = text[0]
+				start: int = 1
+				end: int = text.find(delim, start)
+				if end != -1:
+					# Wydrukowanie tekstu pomiędzy dopasowanymi znakami cudzysłowu/apostrofu
+					print(text[start:end], end='')
 		self.current_line += 1
 
 
