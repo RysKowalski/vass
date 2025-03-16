@@ -1,2 +1,4 @@
 program.vass
 logs.log
+dist
+build
