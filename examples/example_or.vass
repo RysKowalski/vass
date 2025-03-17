@@ -1,0 +1,2 @@
+jeżeli C > A 3 next
+    jeżeli D > B 3 end # if C > A or D > B 3 else end

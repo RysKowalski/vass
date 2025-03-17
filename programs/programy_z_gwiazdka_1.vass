@@ -1,0 +1,15 @@
+wczytaj A
+wczytaj B
+zmniejsz C 1
+jeżeli C < A 7 next
+    jeżeli D < B 7 end
+
+jeżeli C < A next 11
+    zwiększ C 2
+    nowa
+    wypisz zmienną C
+jeżeli D < B next 4
+    zwiększ D 2
+    nowa
+    wypisz zmienną D
+skocz 4
