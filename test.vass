@@ -1,6 +1,0 @@
-wczytaj A
-jeżeli A < 100 next 7
-zwiększ A 5
-wypisz zmienną A
-nowa
-skocz 2

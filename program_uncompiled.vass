@@ -1,0 +1,71 @@
+wczytaj A
+wczytaj B
+
+def main_loop
+
+skocz add_minute
+def end_add_minute
+
+skocz process
+def end_process
+
+jeżeli C = 1 show_result main_loop
+
+
+def add_minute
+zwiększ B 1
+jeżeli B > 60 next end_add_minute
+    zmniejsz B 60
+    zwiększ A 1
+    jeżeli A > 24 next end_add_minute
+        zmniejsz A 24
+skocz end_add_minute
+
+def process
+jeżeli A < 10 trzy_cyfry cztery_cyfry
+
+def trzy_cyfry
+
+def start_usun_10
+jeżeli B > 10 next end_usun_10
+    zmniejsz B 10
+    skocz start_usun_10
+def end_usun_10
+
+jeżeli A = B next end_process
+    ustaw C 1
+    skocz end_process
+
+
+def cztery_cyfry
+ustaw C A
+
+zwiększ C C
+ustaw D C
+zwiększ C C
+zwiększ C C
+zwiększ C D
+ustaw D 0
+
+def start_zamienianie
+jeżeli C > 100 next end_zamienianie
+    zmniejsz C 100
+    zwiększ D 1
+    skocz start_zamienianie
+def end_zamienianie
+
+zwiększ C D
+ustaw D 0
+
+jeżeli C = B next cztery_nie
+    ustaw C 1
+    skocz end_process
+
+def cztery_nie
+ustaw C 0
+skocz end_process
+
+def show_result
+wypisz zmienną A
+wypisz napis ':'
+wypisz zmienną B
